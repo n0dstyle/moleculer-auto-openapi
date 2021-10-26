@@ -258,7 +258,7 @@ module.exports = {
         ctx.meta.$responseHeaders = {
           "Content-Security-Policy": `default-src 'self' unpkg.com; img-src 'self' data:; script-src-elem 'self' 'unsafe-inline' unpkg.com`
         }
-        const version = '3.38.0';
+        const version = '3.52.5';
 
         return `
       <html>
