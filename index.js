@@ -1,5 +1,4 @@
 const UNRESOLVED_ACTION_NAME = "unknown-action";
-const swaggerUiAssetPath = require("swagger-ui-dist").getAbsoluteFSPath()
 
 const NODE_TYPES = {
   boolean: "boolean",
@@ -22,15 +21,6 @@ module.exports = {
     onlyLocal: false, // build schema from only local services
     schemaPath: "/api/openapi/openapi.json",
     uiPath: "/api/openapi/ui",
-    settings: {
-      assets: {
-        // Root folder of assets
-        folder: swaggerUiAssetPath,
-
-        // Further options to `server-static` module
-        options: {}
-      }
-    },
     commonPathItemObjectResponses: {
       200: {
         $ref: "#/components/responses/ReturnedData",
@@ -268,13 +258,12 @@ module.exports = {
         ctx.meta.$responseHeaders = {
           "Content-Security-Policy": `default-src 'self' unpkg.com; img-src 'self' data:; script-src-elem 'self' 'unsafe-inline' unpkg.com`
         }
-        const version = '3.52.5';
 
         return `
       <html>
         <head>
-           <title>OpenAPI UI</title>
-           <link rel="stylesheet" href="//unpkg.com/swagger-ui-dist@${version}/swagger-ui.css"/>
+           <title>Swagger UI</title>
+           <link rel="stylesheet" href="//unpkg.com/swagger-ui-dist@3/swagger-ui.css"/>
         </head>
         <body>
 
@@ -283,26 +272,29 @@ module.exports = {
             <noscript>If you see json, you need to update your moleculer-web to 0.8.0 and moleculer to 0.12</noscript>
           </div>
 
-          <script src="//unpkg.com/swagger-ui-dist@${version}/swagger-ui-bundle.js"></script>
-          <script src="//unpkg.com/swagger-ui-dist@${version}/swagger-ui-standalone-preset.js"></script>
+          <script src="//unpkg.com/swagger-ui-dist@3/swagger-ui-bundle.js" charset="UTF-8"></script>
+          <script src="//unpkg.com/swagger-ui-dist@3/swagger-ui-standalone-preset.js" charset="UTF-8"> </script>
           <script>
-            window.onload = function() {
-             SwaggerUIBundle({
-               url: "${ctx.params.url || this.settings.schemaPath}",
-               dom_id: '#swagger-ui',
-               deepLinking: true,
-               presets: [
-                 SwaggerUIBundle.presets.apis,
-                 SwaggerUIStandalonePreset,
-               ],
-               plugins: [
-                 SwaggerUIBundle.plugins.DownloadUrl
-               ],
-               layout: "StandaloneLayout",
-             });
-            }
-          </script>
+              window.onload = function() {
+            // Begin Swagger UI call region
+              const ui = SwaggerUIBundle({
+                  url: "${ctx.params.url || this.settings.schemaPath}",
+                  dom_id: '#swagger-ui',
+                  deepLinking: true,
+                  presets: [
+                    SwaggerUIBundle.presets.apis,
+                    SwaggerUIStandalonePreset
+                  ],
+                  plugins: [
+                    SwaggerUIBundle.plugins.DownloadUrl
+                  ],
+                  layout: "StandaloneLayout"
+                });
+                // End Swagger UI call region
 
+              window.ui = ui;
+            };
+          </script>
         </body>
       </html>`;
       },
