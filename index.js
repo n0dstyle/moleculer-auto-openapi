@@ -1,4 +1,5 @@
 const UNRESOLVED_ACTION_NAME = "unknown-action";
+const swaggerUiAssetPath = require("swagger-ui-dist").getAbsoluteFSPath()
 
 const NODE_TYPES = {
   boolean: "boolean",
@@ -21,6 +22,15 @@ module.exports = {
     onlyLocal: false, // build schema from only local services
     schemaPath: "/api/openapi/openapi.json",
     uiPath: "/api/openapi/ui",
+    settings: {
+      assets: {
+        // Root folder of assets
+        folder: swaggerUiAssetPath,
+
+        // Further options to `server-static` module
+        options: {}
+      }
+    },
     commonPathItemObjectResponses: {
       200: {
         $ref: "#/components/responses/ReturnedData",
