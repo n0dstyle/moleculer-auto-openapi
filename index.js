@@ -421,7 +421,7 @@ module.exports = {
           action = aliasInfo;
         }
         // support actions like multipart:import.proceedFile
-        if (action.includes(":")) {
+        if (Array.isArray(action) && action.includes(":")) {
           ([actionType, action] = action.split(":"));
         }
 
