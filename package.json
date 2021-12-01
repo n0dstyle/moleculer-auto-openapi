@@ -26,9 +26,7 @@
     "testEnvironment": "node",
     "testTimeout": 60000
   },
-  "dependencies": {
-    "swagger-ui-dist": "^3.52.5"
-  },
+  "dependencies": {},
   "devDependencies": {
     "jest": "^27.0.6",
     "moleculer": "^0.14.18",
